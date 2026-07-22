@@ -19,15 +19,12 @@ model, vectorizer = load_ml_components()
 
 from dotenv import load_dotenv
 
-# This secretly loads the .env file in the background
-load_dotenv()
-
-api_key = os.getenv("GEMINI_API_KEY")
+api_key = st.secrets["GEMINI_API_KEY"]
 
 if api_key:
     genai.configure(api_key=api_key)
 else:
-    st.sidebar.warning("Please enter your Gemini API Key")
+    st.error("API Key not found in Streamlit Secrets!")
 
 # --- SESSION STATE INITIALIZATION ---
 if "step" not in st.session_state:
